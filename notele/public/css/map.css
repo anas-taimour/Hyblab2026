@@ -1,0 +1,165 @@
+:root {
+    --bg-dark: #0a004d; /* Couleur sombre de l'image */
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--bg-dark);
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden; /* Empêche tout scroll */
+}
+
+.fullscreen-hero {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* 1. L'image qui prend tout l'espace */
+.map-bg-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.main-map-img {
+    max-width: 100%; /* Ajuste selon tes préférences */
+    max-height: 100%;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* Rend l'image blanche */
+    opacity: 0.7;
+}
+
+/* La couche qui contient les icônes */
+.icons-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Permet de cliquer "à travers" si besoin */
+}
+
+/* Style des icônes */
+.map-icon {
+    position: absolute;
+    pointer-events: auto; /* Rend l'icône cliquable à nouveau */
+    cursor: pointer;
+    transform: translate(-50%, -50%); /* Centre l'icône sur ses coordonnées */
+    font-size: 24px;
+    transition: transform 0.2s ease;
+}
+
+.map-icon:hover {
+    transform: translate(-50%, -50%) scale(1.2);
+}
+
+.icons-layer {
+    background-image: 
+        linear-gradient(to right, rgba(0,0,0,0.1) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.1) 1px, transparent 1px);
+    background-size: 10% 10%; /* Crée une grille de 10x10 */
+}
+
+/* 2. Placement LIBRE des éléments (Z-index élevé pour être au-dessus) */
+.absolute-logo {
+    position: absolute;
+    top: 40px;
+    left: 60px;
+    z-index: 10;
+}
+.absolute-logo img { height: 50px; }
+
+.absolute-nav {
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    z-index: 10;
+}
+.absolute-nav a {
+    color: white;
+    text-decoration: none;
+    margin-left: 30px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.absolute-tagline {
+  position: absolute;
+  left: 56px;
+  bottom: 110px;
+  z-index: 20;
+}
+
+.absolute-tagline h2 {
+  margin: 0;
+  color: white;
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1.08;
+  max-width: 320px;
+}
+
+.pill {
+  background: transparent;
+  color: white;
+  border: 1.5px solid rgba(255,255,255,0.85);
+  border-radius: 12px;
+  padding: 10px 16px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pill.active {
+  border-color: #ffd200;
+  background: transparent;
+  color: #ffd200;
+  box-shadow: none;
+}
+.filters-top {
+  position: absolute;
+  top: 80px;
+  right: 60px;
+  display: flex;
+  gap: 14px;
+  z-index: 20;
+}
+
+/* Dropdown styles */
+.dropdown{position:relative}
+.dropdown .dropdown-panel{position:absolute;right:0;top:calc(100% + 10px);background:#fff;color:#111;border-radius:8px;padding:10px;min-width:220px;box-shadow:0 10px 30px rgba(0,0,0,.15);display:none;border:2px solid rgba(0,0,0,0.06);z-index:30}
+.dropdown.open .dropdown-panel{display:block}
+.dropdown-panel ul{list-style:none;margin:0;padding:6px}
+.dropdown-panel li{padding:10px 12px;border-radius:6px;cursor:pointer;color:#111}
+.dropdown-panel li:hover{background:#f6f6f6}
+.dropdown-panel li.selected{background:#f6f6f6;border-left:4px solid #ffd200;font-weight:700;color:#666}
+
+/* When dropdown open or when a selection exists, give the pill a yellow border */
+.dropdown .dropdown-toggle{border-color:rgba(255,255,255,0.85)}
+.dropdown.open .dropdown-toggle, .dropdown .dropdown-toggle.selected{border-color:#ffd200;color:#ffd200}
+
+.filters-bottom {
+  position: absolute;
+  right: 60px;
+  bottom: 72px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  width: 300px;
+  z-index: 20;
+}
+
+.filters-bottom .wide {
+  width: 100%;
+}opacity: 0.9;
+

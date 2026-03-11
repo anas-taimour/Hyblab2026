@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Wapi Interactive</title>
+    <link rel="stylesheet" href="css/map.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+
+<body class="dark-theme">
+    <div class="fullscreen-hero">
+        <div class="map-bg-container">
+            <div class="icons-layer">
+                <div class="map-icon" style="top: 37%; left: 28%;" title="Ville 1">📍</div>
+                <div class="map-icon" style="top: 60%; left: 55%;" title="Ville 2">📍</div>
+            </div>
+            <img src="img/carte-wapi.png" alt="Carte Wapi" class="main-map-img">
+            
+        </div>
+        <div class="absolute-logo">
+            <img src="img/logo.png" alt="Label Eco">
+        </div>
+
+        
+
+        <div class="absolute-tagline">
+            <h2>Explore autrement le tissu entrepreneurial de ta région</h2>
+        </div>
+
+                <div class="filters-top">
+                        <div class="dropdown" data-name="secteurs">
+                            <button class="pill dropdown-toggle" aria-expanded="false">Secteurs <span class="caret">▾</span></button>
+                            <div class="dropdown-panel" aria-hidden="true">
+                                <ul>
+                                    <li data-value="food">Food & Gastronomie</li>
+                                    <li data-value="industrie">Industrie/Machine</li>
+                                    <li data-value="commerce">Commerce/service</li>
+                                    <li data-value="tech">Tech/Innovation</li>
+                                    <li data-value="agri">Agriculture/Artisanat</li>
+                                    <li data-value="creatif">Créatif & culture</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="dropdown" data-name="taille">
+                            <button class="pill dropdown-toggle">Taille de l’entreprise <span class="caret">▾</span></button>
+                            <div class="dropdown-panel" aria-hidden="true">
+                                <ul>
+                                    <li data-value="independant">Indépendant</li>
+                                    <li data-value="pme">PME</li>
+                                    <li data-value="grande">Grande entreprise</li>
+                                </ul>
+                            </div>
+                        </div>
+                </div>
+
+        <div class="filters-bottom">
+            <button class="pill">Plot twist</button>
+            <button class="pill">Affaire de famille</button>
+            <button class="pill">Boss ladies</button>
+            <button class="pill">Surprise me</button>
+            <button class="pill wide">Jobs pas comme les autres</button>
+        </div>
+    </div>
+        <script>
+            // Dropdown open/close, multi-select for 'secteurs', single-select for 'taille'
+            (function(){
+                const dropdowns = document.querySelectorAll('.dropdown');
+
+                function closeAll(except){
+                    dropdowns.forEach(d=>{ if(d!==except){ d.classList.remove('open'); const p=d.querySelector('.dropdown-panel'); if(p) p.setAttribute('aria-hidden','true'); const t=d.querySelector('.dropdown-toggle'); if(t) t.setAttribute('aria-expanded','false'); }});
+                }
+
+                document.addEventListener('click', (e)=>{
+                    const inside = e.target.closest('.dropdown');
+                    if(!inside) closeAll();
+                });
+
+                dropdowns.forEach(dd=>{
+                    const btn = dd.querySelector('.dropdown-toggle');
+                    const panel = dd.querySelector('.dropdown-panel');
+                        const items = panel.querySelectorAll('li');
+                        const isMulti = dd.dataset.name === 'secteurs' || dd.dataset.name === 'taille';
+
+                    btn.addEventListener('click',(ev)=>{
+                        ev.stopPropagation();
+                        const isOpen = dd.classList.toggle('open');
+                        panel.setAttribute('aria-hidden', !isOpen);
+                        btn.setAttribute('aria-expanded', !!isOpen);
+                        if(isOpen) closeAll(dd);
+                    });
+
+                    if(isMulti){
+                        // multi-select behavior: toggle selection, do NOT close panel, keep button label as original
+                        items.forEach(li=>{
+                            li.addEventListener('click',(ev)=>{
+                                ev.stopPropagation();
+                                li.classList.toggle('selected');
+                                // indicate button selected state if at least one selected
+                                const any = Array.from(items).some(x=>x.classList.contains('selected'));
+                                if(any) btn.classList.add('selected'); else btn.classList.remove('selected');
+                            });
+                        });
+                    } else {
+                        // fallback single-select (should not occur with current dropdowns)
+                        items.forEach(li=>{
+                            li.addEventListener('click',(ev)=>{
+                                ev.stopPropagation();
+                                items.forEach(x=>x.classList.remove('selected'));
+                                li.classList.add('selected');
+                                btn.classList.add('selected');
+                                const caret = btn.querySelector('.caret') ? btn.querySelector('.caret').outerHTML : '';
+                                btn.innerHTML = li.textContent + ' ' + caret;
+                                dd.classList.remove('open');
+                                panel.setAttribute('aria-hidden','true');
+                                btn.setAttribute('aria-expanded','false');
+                            });
+                        });
+                    }
+                });
+
+                // Re-enable bottom pills toggle yellow border
+                document.querySelectorAll('.filters-bottom .pill, .filters-top > .pill').forEach(p=>{
+                    p.addEventListener('click', (e)=>{
+                        // if this pill is inside a dropdown toggle, ignore (handled by dropdown)
+                        if(e.currentTarget.closest('.dropdown')) return;
+                        e.currentTarget.classList.toggle('active');
+                    });
+                });
+            })();
+        </script>
+</body>
+</html>
