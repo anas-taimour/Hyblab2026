@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Wapi Interactive</title>
+    <link rel="stylesheet" href="css/map.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+</head>
+
+
+<body class="dark-theme">
+    <div class="fullscreen-hero">
+        <div class="map-bg-container">
+            <div class="icons-layer"></div> 
+            
+            <img src="img/carte-wapi.png" alt="Carte Wapi" class="main-map-img">
+        </div>
+
+        <div class="absolute-logo">
+            <img src="img/logo.png" alt="Label Eco">
+        </div>
+
+        <div class="absolute-tagline">
+            <h2>Explore le tissus<br>entrepreneurial de ta région</h2>
+        </div>
+
+        <div class="filters-top">
+            <div class="dropdown" data-name="secteurs">
+                <button class="pill dropdown-toggle" aria-expanded="false">Secteurs <span class="caret">▾</span></button>
+                <div class="dropdown-panel" aria-hidden="true">
+                    <ul>
+                        <li data-value="agriculture">Agriculture / Artisanat</li>
+                        <li data-value="art">Art & Culture</li>
+                        <li data-value="commerce">Commerce / Service</li>
+                        <li data-value="industrie">Industrie</li>
+                        <li data-value="sante">Santé & Bien-être</li>
+                        <li data-value="tech">Tech & Innovation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="dropdown" data-name="taille">
+                <button class="pill dropdown-toggle">Taille de l’entreprise <span class="caret">▾</span></button>
+                <div class="dropdown-panel" aria-hidden="true">
+                    <ul>
+                        <li data-value="independant">Indépendant</li>
+                        <li data-value="pme">PME</li>
+                        <li data-value="grande">Grande entreprise</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="filters-bottom">
+            <button class="pill">Plot twist</button>
+            <button class="pill">Affaire de famille</button>
+            <button class="pill">Boss ladies</button>
+            <button class="pill">Surprise me</button>
+            <button class="pill wide">Jobs pas comme les autres</button>
+        </div>
+    </div>
+
+    <div id="company-modal" class="modal-overlay hidden">
+        <div class="modal-card">
+            <button class="close-modal">&times;</button>
+            <div class="modal-header">
+                <div class="modal-logo-circle">
+                    <span id="m-initial">E</span>
+                </div>
+                <div class="modal-titles">
+                    <h3 id="m-nom">ECOFROST</h3>
+                    <p id="m-secteur-label">Industrie agroalimentaire</p>
+                    <div class="modal-meta">
+                        <span id="m-ville">Péruwelz</span>
+                        <span id="m-taille">PME</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <p class="modal-quote">"<span id="m-description">La frite belge exportée dans le monde</span>"</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-discover">Découvrir l'entreprise <span>+</span></button>
+                <button class="btn-video">Voir la vidéo <span class="play-icon">▶</span></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/map.js"></script>
+</body>
+</html>

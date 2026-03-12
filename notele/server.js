@@ -11,6 +11,9 @@ const app = express();
 // Load and register our REST API
 const api = require('./api/api');
 app.use('/api', api);
+app.get('/map', (req, res) => {
+    res.sendFile(path.join(__dirname, 'map.html'));
+});
 
 // Minimum routing: serve static content from the html directory
 app.use(express.static(path.join(__dirname, 'public')));
