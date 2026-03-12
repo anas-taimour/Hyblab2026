@@ -33,7 +33,7 @@ body, html {
 /* --- CARTE & GRILLE --- */
 .map-bg-container {
     position: absolute;
-    inset: 0; /* Équivalent top/left/bottom/right: 0 */
+    inset: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,7 +44,7 @@ body, html {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    filter: brightness(0) invert(1); /* Rend l'image PNG blanche */
+    filter: brightness(0) invert(1);
     opacity: 0.7;
 }
 
@@ -53,7 +53,6 @@ body, html {
     inset: 0;
     z-index: 5;
     pointer-events: none;
-    /* Grille de repère visuelle */
     background-image: 
         linear-gradient(to right, rgba(255,255,255,0.05) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(255,255,255,0.05) 1px, transparent 1px);
@@ -65,8 +64,8 @@ body, html {
     position: absolute;
     z-index: 10;
     cursor: pointer;
-    pointer-events: auto; /* Réactive le clic malgré le layer en 'none' */
-    transform: translate(-50%, -100%); /* Aligne la pointe du picto sur la coordonnée */
+    pointer-events: auto;
+    transform: translate(-50%, -100%);
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
@@ -76,7 +75,6 @@ body, html {
     filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
 }
 
-/* États de filtrage (JS) */
 .map-icon.hidden {
     opacity: 0;
     pointer-events: none;
@@ -89,7 +87,6 @@ body, html {
     transform: translate(-50%, -100%) scale(1);
 }
 
-/* État Focus : Le picto traverse l'overlay de la modale */
 .map-icon.focused {
     z-index: 3000 !important;
     opacity: 1 !important;
@@ -120,76 +117,154 @@ body, html {
     margin: 0;
 }
 
-/* Boutons & Filtres */
-.filters-top {
-    position: absolute;
-    top: 40px;
-    right: 60px;
-    display: flex;
-    gap: 14px;
-    z-index: 100;
-}
-
+/* --- BOUTONS & FILTRES DU BAS --- */
 .filters-bottom {
     position: absolute;
     right: 60px;
     bottom: 60px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 12px;
-    width: 350px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    width: 320px;
     z-index: 100;
 }
 
 .pill {
     background: transparent;
     color: var(--white);
-    border: 1.5px solid rgba(255,255,255,0.7);
-    border-radius: 12px;
-    padding: 10px 18px;
-    font-size: 14px;
-    font-weight: 600;
+    border: 1px solid rgba(255,255,255,0.7);
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: 0.3s ease;
+    transition: all 0.3s ease;
+    text-align: center;
 }
 
-.pill:hover { background: rgba(255,255,255,0.1); }
-.pill.active, .dropdown.open .dropdown-toggle {
+.pill:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.pill.active {
     border-color: var(--accent-yellow);
     color: var(--accent-yellow);
+    background: rgba(255, 210, 0, 0.05);
 }
-.pill.wide { width: 100%; }
 
-/* Dropdowns */
-.dropdown { position: relative; }
-.dropdown .dropdown-panel {
+.pill.wide {
+    grid-column: span 2;
+}
+
+/* --- MENUS DÉROULANTS (DROPDOWNS) --- */
+.filters-top {
+    position: absolute;
+    top: 40px;
+    right: 60px;
+    display: flex;
+    gap: 20px;
+    z-index: 100;
+}
+
+.dropdown {
+    position: relative;
+    width: 352px;
+}
+
+.dropdown-toggle {
+    width: 100%;
+    height: 47px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    color: var(--white);
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 8px;
+    padding: 0 16px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.dropdown-toggle:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown.open .dropdown-toggle, 
+.dropdown-toggle.selected {
+    border-color: var(--accent-yellow);
+    color: var(--accent-yellow);
+    background: rgba(255, 210, 0, 0.05);
+}
+
+.dropdown-toggle .caret {
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.dropdown-panel {
     position: absolute;
     right: 0;
-    top: calc(100% + 10px);
-    background: var(--white);
-    border-radius: 12px;
-    padding: 10px;
-    min-width: 220px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    top: calc(100% + 8px);
+    width: 100%;
+    background: var(--bg-dark);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    padding: 8px 0;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     display: none;
     z-index: 110;
 }
-.dropdown.open .dropdown-panel { display: block; }
 
-.dropdown-panel ul { list-style: none; margin: 0; padding: 0; }
+.dropdown.open .dropdown-panel {
+    display: block;
+}
+
+.dropdown-panel ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* ALIGNEMENT DES PICTOGRAMMES DANS LES MENUS */
 .dropdown-panel li {
-    padding: 10px 15px;
-    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Espace entre le picto et le texte */
+    padding: 10px 16px;
     cursor: pointer;
-    color: #333;
+    color: var(--white);
+    font-size: 0.9rem;
     transition: 0.2s;
 }
-.dropdown-panel li:hover { background: #f0f0f0; }
+
+.dropdown-panel li:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 .dropdown-panel li.selected {
-    background: #f0f0f0;
-    border-left: 4px solid var(--accent-yellow);
-    font-weight: bold;
+    color: var(--accent-yellow);
+    font-weight: 600;
+    background: rgba(255, 210, 0, 0.05);
+}
+
+/* Gestion de l'image SVG dans le span */
+.dropdown-panel li .icon img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    display: block;
+    filter: brightness(0) invert(1); /* Rend les SVG blancs par défaut */
+    transition: filter 0.2s ease;
+}
+
+/* Le picto devient jaune quand sélectionné */
+.dropdown-panel li.selected .icon img {
+    filter: brightness(0) saturate(100%) invert(86%) sepia(42%) saturate(1007%) hue-rotate(352deg) brightness(103%) contrast(104%);
 }
 
 /* --- MODALE (DETAILS ENTREPRISE) --- */
@@ -199,15 +274,18 @@ body, html {
     background: rgba(10, 0, 77, 0.4);
     backdrop-filter: blur(4px);
     z-index: 2000;
-    display: none; /* Géré par JS */
+    display: none;
 }
 
 .modal-card {
-    position: absolute; /* Positionnement dynamique via JS */
+    position: absolute;
     background: var(--white);
     border-radius: 20px;
     padding: 30px;
     width: 380px;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
     box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     color: var(--text-dark);
 }
@@ -267,16 +345,3 @@ body, html {
     font-size: 24px; cursor: pointer;
     color: #999;
 }
-
-/* Dropdown styles */
-.dropdown{position:relative}
-.dropdown .dropdown-panel{position:absolute;right:0;top:calc(100% + 10px);background:#fff;color:#111;border-radius:8px;padding:10px;min-width:220px;box-shadow:0 10px 30px rgba(0,0,0,.15);display:none;border:2px solid rgba(0,0,0,0.06);z-index:30}
-.dropdown.open .dropdown-panel{display:block}
-.dropdown-panel ul{list-style:none;margin:0;padding:6px}
-.dropdown-panel li{padding:10px 12px;border-radius:6px;cursor:pointer;color:#111}
-.dropdown-panel li:hover{background:#f6f6f6}
-.dropdown-panel li.selected{background:#f6f6f6;border-left:4px solid #ffd200;font-weight:700;color:#666}
-
-/* When dropdown open or when a selection exists, give the pill a yellow border */
-.dropdown .dropdown-toggle{border-color:rgba(255,255,255,0.85)}
-.dropdown.open .dropdown-toggle, .dropdown .dropdown-toggle.selected{border-color:#ffd200;color:#ffd200}
