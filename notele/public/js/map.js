@@ -1,44 +1,99 @@
 /**
- * 1. CLASSES ET DONNÉES
+ * 1. CLASSES ET DONNÉES (Basées sur votre CSV LabelEco)
  */
 class Entreprise {
     constructor(nom, secteur, taille, tags, coords, ville, phrase) {
         this.nom = nom;
-        this.secteur = secteur; // agriculture, art, commerce, industrie, sante, tech
-        this.taille = taille;   // independant, pme, grande
+        this.secteur = secteur; 
+        this.taille = taille;   
         this.tags = tags;
-        this.coords = coords;
-        this.ville = ville;
-        this.phrase = phrase;
+        this.coords = coords;   
+        this.ville = ville;     
+        this.phrase = phrase;   
+        this.pinElement = null; // Stocke la div HTML pour pouvoir la déplacer
     }
 }
 
+// Catalogue mis à jour avec vos vraies données et vos coordonnées E1 à E15
 const catalogueEntreprises = [
-    new Entreprise("Les Vergers de la Wapi", "agriculture", "pme", ["Affaire de famille"], { top: "25%", left: "30%" }, "Ath", "Le goût authentique des fruits de notre terroir"),
-    new Entreprise("Ferme du Grand Chêne", "agriculture", "independant", ["Surprise me"], { top: "42%", left: "15%" }, "Tournai", "Une agriculture raisonnée au service du local"),
-    new Entreprise("Coopérative Bio-Semeur", "agriculture", "grande", ["Jobs pas comme les autres"], { top: "15%", left: "45%" }, "Lessines", "Semer aujourd'hui les solutions durables de demain"),
-    new Entreprise("Pixel & Co", "tech", "pme", ["Plot twist"], { top: "55%", left: "58%" }, "Tournai", "L'agence créative qui bouscule les codes du web"),
-    new Entreprise("DataWapi Solutions", "tech", "grande", ["Jobs pas comme les autres"], { top: "68%", left: "75%" }, "Mouscron", "L'intelligence artificielle au service des PME"),
-    new Entreprise("Neo-Soft Lab", "tech", "independant", ["Surprise me", "Plot twist"], { top: "30%", left: "62%" }, "Enghien", "Le code artisanal pour des applications uniques"),
-    new Entreprise("Métal-Wapi Industrie", "industrie", "grande", ["Jobs pas comme les autres"], { top: "20%", left: "75%" }, "Leuze-en-Hainaut", "L'acier de haute précision exporté partout en Europe"),
-    new Entreprise("Ateliers Méca-Flash", "industrie", "pme", ["Affaire de famille"], { top: "75%", left: "45%" }, "Antoing", "La mécanique de précision, une passion transmise"),
-    new Entreprise("Usinage du Tournaisis", "industrie", "pme", ["Jobs pas comme les autres"], { top: "50%", left: "80%" }, "Tournai", "Façonner l'avenir pièce par pièce"),
-    new Entreprise("Boutique L'Artisan Vert", "commerce", "independant", ["Affaire de famille", "Surprise me"], { top: "35%", left: "25%" }, "Ath", "Des produits naturels sélectionnés avec soin"),
-    new Entreprise("Wapi-Market", "commerce", "grande", ["Plot twist"], { top: "62%", left: "20%" }, "Mouscron", "La proximité d'un grand réseau, l'esprit de quartier"),
-    new Entreprise("Logistique Express", "commerce", "pme", ["Jobs pas comme les autres"], { top: "80%", left: "65%" }, "Tournai", "Vos colis arrivent à bon port, plus vite que l'éclair"),
-    new Entreprise("Centre Soins & Nature", "sante", "pme", ["Surprise me"], { top: "48%", left: "42%" }, "Beloeil", "Le bien-être global accessible à tous"),
-    new Entreprise("Wapi-Pharma", "sante", "grande", ["Jobs pas comme les autres"], { top: "12%", left: "60%" }, "Lessines", "L'excellence pharmaceutique au cœur de la région"),
-    new Entreprise("La Galerie Ephémère", "art", "independant", ["Plot twist", "Surprise me"], { top: "55%", left: "35%" }, "Tournai", "L'art contemporain s'invite là où on ne l'attend pas")
+    new Entreprise("Ecofrost", "food", "pme", [], { left: 50, top: 81.5 }, "Péruwelz", "La frite belge exportée dans le monde"),
+    new Entreprise("Red System", "tech", "pme", ["Jobs pas comme les autres"], { left: 39, top: 59 }, "Wapi", "À compléter..."),
+    new Entreprise("Storme", "food", "pme", ["Affaire de famille"], { left: 19, top: 21 }, "Wapi", "À compléter..."),
+    new Entreprise("Les Glaces d’Élodie", "food", "independant", [], { left: 75, top: 32 }, "Wapi", "À compléter..."),
+    new Entreprise("Moulin de Moulbaix", "agriculture", "pme", ["Affaire de famille"], { left: 74, top: 43 }, "Wapi", "À compléter..."),
+    new Entreprise("Famiflora", "commerce", "grande", [], { left: 22, top: 19 }, "Wapi", "À compléter..."),
+    new Entreprise("Atlantis Security", "art", "pme", ["Jobs pas comme les autres"], { left: 37, top: 62 }, "Wapi", "À compléter..."),
+    new Entreprise("Les Camuches", "art", "pme", [], { left: 40, top: 65 }, "Wapi", "À compléter..."),
+    new Entreprise("Mother Flower", "agriculture", "independant", ["Boss ladies"], { left: 37, top: 55.5 }, "Wapi", "À compléter..."),
+    new Entreprise("Technord", "tech", "pme", [], { left: 35, top: 61 }, "Wapi", "À compléter..."),
+    new Entreprise("Six Fumaison", "food", "pme", ["Jobs pas comme les autres"], { left: 19, top: 28 }, "Wapi", "À compléter..."),
+    new Entreprise("Domaine Degavre", "agriculture", "pme", ["Jobs pas comme les autres"], { left: 72, top: 53.5 }, "Wapi", "À compléter..."),
+    new Entreprise("Doc Phone", "commerce", "independant", ["Jobs pas comme les autres"], { left: 41, top: 55 }, "Wapi", "À compléter..."),
+    new Entreprise("MyQM", "tech", "pme", ["Plot twist"], { left: 27, top: 52.5 }, "Wapi", "À compléter..."),
+    new Entreprise("Hélène Création", "art", "independant", ["Boss ladies"], { left: 22, top: 30 }, "Wapi", "À compléter...")
 ];
 
 /**
- * 2. LOGIQUE GLOBALE
+ * 2. LOGIQUE GLOBALE ET POSITIONNEMENT RESPONSIVE
  */
 (function(){
+    // Variable globale pour cibler l'image
+    let mapImg;
+
     document.addEventListener('DOMContentLoaded', () => {
+        mapImg = document.querySelector('.main-map-img'); 
         initialiserPins();
         setupInteractions();
     });
+
+    // --- LA FONCTION MAGIQUE ADAPTÉE À TOUTES LES TAILLES D'IMAGE ---
+    function positionnerPins() {
+        if (!mapImg) return;
+        
+        // On récupère la taille et la position exactes de l'image sur l'écran
+        const rect = mapImg.getBoundingClientRect();
+        if (rect.width === 0) return; // Sécurité si l'image n'est pas chargée
+
+        // 1. Vos dimensions de référence
+        const REF_WIDTH = 1272;
+        const REF_HEIGHT = 670;
+        const naturalRatio = REF_WIDTH / REF_HEIGHT;
+
+        // 2. Les dimensions réelles de l'élément image sur votre écran
+        const containerW = rect.width;
+        const containerH = rect.height;
+        const containerRatio = containerW / containerH;
+
+        let renderedW, renderedH, offsetX, offsetY;
+
+        // 3. On simule "object-fit: contain" + On ajoute la position (left/top) de l'image
+        if (containerRatio > naturalRatio) {
+            renderedH = containerH;
+            renderedW = renderedH * naturalRatio;
+            // rect.left et rect.top permettent aux pictos de suivre l'image si elle est centrée
+            offsetX = rect.left + (containerW - renderedW) / 2;
+            offsetY = rect.top;
+        } else {
+            renderedW = containerW;
+            renderedH = renderedW / naturalRatio;
+            offsetX = rect.left;
+            offsetY = rect.top + (containerH - renderedH) / 2;
+        }
+
+        // 4. On place les points avec une précision absolue
+        catalogueEntreprises.forEach(ent => {
+            if (ent.pinElement) {
+                const leftVal = parseFloat(ent.coords.left);
+                const topVal = parseFloat(ent.coords.top);
+                
+                const x = offsetX + (leftVal / 100) * renderedW;
+                const y = offsetY + (topVal / 100) * renderedH;
+                
+                ent.pinElement.style.left = `${x}px`;
+                ent.pinElement.style.top = `${y}px`;
+            }
+        });
+    }
 
     /**
      * Initialisation des pins sur la carte
@@ -50,8 +105,6 @@ const catalogueEntreprises = [
         catalogueEntreprises.forEach(ent => {
             const pinWrapper = document.createElement('div');
             pinWrapper.className = 'map-icon hidden';
-            pinWrapper.style.top = ent.coords.top;
-            pinWrapper.style.left = ent.coords.left;
             
             // Stockage des données pour le filtrage
             pinWrapper.dataset.secteur = ent.secteur;
@@ -70,16 +123,27 @@ const catalogueEntreprises = [
 
             pinWrapper.appendChild(img);
             layer.appendChild(pinWrapper);
+            
+            // On sauvegarde l'élément HTML dans l'objet pour pouvoir le repositionner
+            ent.pinElement = pinWrapper;
         });
+
+        // On positionne les pins immédiatement (si l'image est déjà là) et à chaque redimensionnement
+        if (mapImg.complete) {
+            positionnerPins();
+        }
+        mapImg.addEventListener('load', positionnerPins);
+        window.addEventListener('resize', positionnerPins);
 
         // --- GESTION DE LA FERMETURE ---
         const modalOverlay = document.getElementById('company-modal');
         const closeBtn = document.querySelector('.close-modal');
 
         const fermerTout = () => {
-            modalOverlay.style.display = 'none';
+            if(modalOverlay) modalOverlay.style.display = 'none';
             document.querySelectorAll('.map-icon').forEach(p => p.classList.remove('focused'));
-            document.querySelector('.fullscreen-hero').classList.remove('hero-blurred');
+            const hero = document.querySelector('.fullscreen-hero');
+            if(hero) hero.classList.remove('hero-blurred');
         };
 
         closeBtn?.addEventListener('click', fermerTout);
@@ -98,43 +162,37 @@ const catalogueEntreprises = [
         // 1. Remplissage des textes
         document.getElementById('m-nom').textContent = ent.nom;
         document.getElementById('m-initial').textContent = ent.nom.charAt(0);
-        document.getElementById('m-ville').textContent = ent.ville;
+        document.getElementById('m-ville').textContent = ent.ville || "Wapi";
         document.getElementById('m-taille').textContent = ent.taille.toUpperCase();
-        document.getElementById('m-description').textContent = ent.phrase;
-        document.getElementById('m-secteur-label').textContent = ent.secteur;
+        document.getElementById('m-description').textContent = ent.phrase || "";
+        
+        // 2. Formater le label du secteur (ex: "food" -> "Food")
+        let secteurLabel = ent.secteur.charAt(0).toUpperCase() + ent.secteur.slice(1);
+        if (ent.secteur === 'agriculture') secteurLabel = "Agriculture / Artisanat";
+        if (ent.secteur === 'art') secteurLabel = "Art & Culture";
+        if (ent.secteur === 'commerce') secteurLabel = "Commerce / Service";
+        document.getElementById('m-secteur-label').textContent = secteurLabel;
 
-        // 2. Focus Visuel (Z-index élevé et flou du fond)
+        // 3. Focus Visuel
         document.querySelectorAll('.map-icon').forEach(p => p.classList.remove('focused'));
         pinElement.classList.add('focused');
         document.querySelector('.fullscreen-hero').classList.add('hero-blurred');
 
-        // 3. Affichage
+        // 4. Affichage
         modal.style.display = 'block';
 
-        // 4. Calcul de position Anti-Débordement
+        // 5. Calcul de position Anti-Débordement
         const rect = pinElement.getBoundingClientRect();
-        const cardWidth = 380; // Largeur définie dans le CSS
+        const cardWidth = 380; 
         const cardHeight = card.offsetHeight || 300;
         const margin = 20;
 
-        // Position par défaut (à droite du picto)
         let left = rect.left + margin;
         let top = rect.top - (cardHeight / 2);
 
-        // Correction si dépasse à DROITE
-        if (left + cardWidth > window.innerWidth) {
-            left = rect.left - cardWidth - margin;
-        }
-
-        // Correction si dépasse à GAUCHE
+        if (left + cardWidth > window.innerWidth) left = rect.left - cardWidth - margin;
         if (left < margin) left = margin;
-
-        // Correction si dépasse en BAS
-        if (top + cardHeight > window.innerHeight) {
-            top = window.innerHeight - cardHeight - margin;
-        }
-
-        // Correction si dépasse en HAUT
+        if (top + cardHeight > window.innerHeight) top = window.innerHeight - cardHeight - margin;
         if (top < margin) top = margin;
 
         card.style.left = `${left}px`;
@@ -145,8 +203,9 @@ const catalogueEntreprises = [
      * Logique de filtrage
      */
     function filtrerMap() {
-        const secteurs = Array.from(document.querySelectorAll('.dropdown[data-name="secteurs"] li.selected')).map(li => li.dataset.value);
-        const tailles = Array.from(document.querySelectorAll('.dropdown[data-name="taille"] li.selected')).map(li => li.dataset.value);
+        // Force les valeurs en minuscules pour faciliter la comparaison
+        const secteurs = Array.from(document.querySelectorAll('.dropdown[data-name="secteurs"] li.selected')).map(li => li.dataset.value.toLowerCase());
+        const tailles = Array.from(document.querySelectorAll('.dropdown[data-name="taille"] li.selected')).map(li => li.dataset.value.toLowerCase());
         const tags = Array.from(document.querySelectorAll('.filters-bottom .pill.active')).map(btn => btn.textContent.trim());
 
         const auMoinsUnFiltre = secteurs.length > 0 || tailles.length > 0 || tags.length > 0;
@@ -154,12 +213,13 @@ const catalogueEntreprises = [
 
         pins.forEach(pin => {
             if (!auMoinsUnFiltre) {
-                pin.classList.replace('visible', 'hidden');
+                pin.classList.remove('visible');
+                pin.classList.add('hidden');
                 return;
             }
 
-            const pSecteur = pin.dataset.secteur;
-            const pTaille = pin.dataset.taille;
+            const pSecteur = pin.dataset.secteur.toLowerCase();
+            const pTaille = pin.dataset.taille.toLowerCase();
             const pTags = JSON.parse(pin.dataset.tags);
 
             const matchS = secteurs.length === 0 || secteurs.includes(pSecteur);
@@ -180,7 +240,6 @@ const catalogueEntreprises = [
      * Configuration des menus et boutons
      */
     function setupInteractions() {
-        // Dropdowns
         document.querySelectorAll('.dropdown').forEach(dd => {
             const btn = dd.querySelector('.dropdown-toggle');
             const items = dd.querySelectorAll('li');
@@ -188,7 +247,6 @@ const catalogueEntreprises = [
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const isOpen = dd.classList.toggle('open');
-                // Fermer les autres dropdowns
                 document.querySelectorAll('.dropdown').forEach(other => {
                     if (other !== dd) other.classList.remove('open');
                 });
@@ -205,7 +263,6 @@ const catalogueEntreprises = [
             });
         });
 
-        // Pills (Tags du bas)
         document.querySelectorAll('.filters-bottom .pill').forEach(p => {
             p.addEventListener('click', () => {
                 p.classList.toggle('active');
@@ -213,7 +270,6 @@ const catalogueEntreprises = [
             });
         });
 
-        // Clic n'importe où pour fermer les dropdowns
         document.addEventListener('click', () => {
             document.querySelectorAll('.dropdown').forEach(dd => dd.classList.remove('open'));
         });
