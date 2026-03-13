@@ -12,6 +12,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const didYouKnowSlides = Array.from(document.querySelectorAll("[data-didyouknow-slide]"));
   const didYouKnowButtons = document.querySelectorAll("[data-didyouknow-nav]");
   const quizQuestions = document.querySelectorAll("[data-quiz-question]");
+  const endPopup = document.querySelector("[data-end-popup]");
+  const endPopupClose = document.querySelector("[data-end-popup-close]");
   let activeIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));
   let activeFactIndex = factSlides.findIndex((slide) => slide.classList.contains("is-active"));
   let activeDidYouKnowIndex = didYouKnowSlides.findIndex((slide) => slide.classList.contains("is-active"));
@@ -207,5 +209,9 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     });
+  });
+
+  endPopupClose?.addEventListener("click", () => {
+    endPopup?.classList.add("is-hidden");
   });
 });
