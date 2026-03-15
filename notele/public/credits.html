@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Crédits</title>
+
+<style>
+
+@font-face {
+    font-family: 'Apfel Grotezk';
+    src: url('data/ApfelGrotezk-Satt.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+body{
+    margin:0;
+    font-family: 'IvyStyle Sans', 'Segoe UI', Arial, Helvetica, sans-serif;
+    background:#e5e5e5; /* fond gris autour */
+}
+
+/* page violet = 65% écran */
+.page{
+    width:65vw;
+    min-height:100vh;
+    background:#4b179f;
+    color:white;
+}
+
+/* contenu interne */
+.container{
+    padding:60px 80px;
+}
+
+/* header */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:60px;
+}
+
+.logo-img{
+    height:88px;
+    width:auto;
+    display:block;
+}
+
+.map-btn{
+    border:1px solid white;
+    padding:10px 18px;
+    border-radius:20px;
+    text-decoration:none;
+    color:white;
+    font-size:14px;
+}
+
+/* title */
+h1{
+    font-size:70px;
+    margin-bottom:50px;
+    font-family: 'Apfel Grotezk', 'IvyStyle Sans', 'Segoe UI', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* sections */
+.section{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.section-text h2{
+    margin:0;
+    font-size:22px;
+}
+
+.section img{
+    width:180px;
+    height:110px;
+    display:block;
+    object-fit:contain;
+}
+
+/* collaboration tags */
+.collab-tags{
+    display:flex;
+    gap:10px;
+    margin-top:8px;
+}
+
+.collab-tags span{
+    border:1px solid rgba(255,255,255,0.5);
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:13px;
+}
+
+/* students */
+.students{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-top:40px;
+}
+
+.student-col{
+    background: rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:12px;
+    padding:16px;
+}
+
+.students p{
+    margin:4px 0;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="page">
+
+<div class="container">
+
+<div class="header">
+<img class="logo-img" src="img/labelecoimg.png">
+<a class="map-btn">Retour à la map</a>
+</div>
+
+<h1>Crédits</h1>
+
+<div class="section">
+<div>
+<h2>HYPLAB 2026</h2>
+<p>Concours : Hyblab 2026 – “Remixer vos contenus”, organisé par Médias Ouest.</p>
+</div>
+<img src="img/hyblabb.png">
+</div>
+
+<div class="section">
+<div>
+<h2>COLLABORATION PÉDAGOGIQUE</h2>
+<div class="collab-tags">
+<span>EDNA</span>
+<span>Polytech Nantes</span>
+</div>
+</div>
+<img src="img/ednapolytech.png">
+</div>
+
+<div class="section">
+<div>
+<h2>CONTENUS</h2>
+<p>LabelEco</p>
+<p>Notélé</p>
+</div>
+</div>
+
+<div class="students">
+
+<div class="student-col">
+<h3>ETUDIANTS - POLYTECH</h3>
+<p>Sara AIT DAOUD</p>
+<p>Lina CHOUKI</p>
+<p>Esteban GIROUX</p>
+<p>Hajare OULBAZ</p>
+<p>Anas TAIMOUR</p>
+</div>
+
+<div class="student-col">
+<h3>ETUDIANTS - EDNA</h3>
+<p>Gwenn MELIS</p>
+<p>Jeanne MÉNORET</p>
+<p>Rohif SAKA</p>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</body>
+</html>

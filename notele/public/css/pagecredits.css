@@ -1,0 +1,116 @@
+
+@font-face {
+    font-family: 'Apfel Grotezk';
+    src: url('../data/Polices-Labeleco/Apfel/ApfelGrotezk-Satt.otf') format('opentype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+#scrollable_page_2 *{
+    margin:0;
+    font-family: Apfel Grotezk;
+    /* background:#e5e5e5; fond gris autour */
+}
+
+/* page violet = 65% écran */
+#scrollable_page_2{
+    width:65vw;
+    min-height:100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    /* display: none; */
+    background-color:#4b179f;
+    color:white;
+}
+
+/* contenu interne */
+.container{
+    padding:60px 80px;
+}
+
+/* header */
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:60px;
+}
+
+.logo-img{
+    height:88px;
+    width:auto;
+    display:block;
+}
+
+.map-btn{
+    border:1px solid white;
+    padding:10px 18px;
+    border-radius:20px;
+    text-decoration:none;
+    color:white;
+    font-size:14px;
+}
+
+/* title */
+h1{
+    font-size:70px;
+    margin-bottom:50px;
+    font-family: 'Apfel Grotezk', 'IvyStyle Sans', 'Segoe UI', Arial, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* sections */
+.section{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.section-text h2{
+    margin:0;
+    font-size:22px;
+}
+
+.section img{
+    width:180px;
+    height:110px;
+    display:block;
+    object-fit:contain;
+}
+
+/* collaboration tags */
+.collab-tags{
+    display:flex;
+    gap:10px;
+    margin-top:8px;
+}
+
+.collab-tags span{
+    border:1px solid rgba(255,255,255,0.5);
+    border-radius:999px;
+    padding:6px 10px;
+    font-size:13px;
+}
+
+/* students */
+.students{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px;
+    margin-top:40px;
+}
+
+.student-col{
+    background: rgba(255,255,255,0.08);
+    border:1px solid rgba(255,255,255,0.2);
+    border-radius:12px;
+    padding:16px;
+}
+
+.students p{
+    margin:4px 0;
+}
