@@ -19,10 +19,27 @@
     src: url("../data/Polices-Labeleco/Apfel/ApfelGrotezk-Satt.otf");
 }
 
-/* #intro-player{
-    width: 100vw;
-    height: 100vh;
-} */
+#video-intro {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw; /* 100% de la largeur de la vue */
+    height: 100vh; /* 100% de la hauteur de la vue */
+    background-color: #000;
+    z-index: 9999;
+    overflow: hidden; /* Sécurité anti-scroll */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.8s ease-out, visibility 0.8s;
+}
+
+#intro-player {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Remplit l'espace comme un fond d'écran */
+    object-position: center; /* Centre la vidéo si elle est rognée */
+}
 
 *{
     padding:0;
@@ -335,27 +352,32 @@ main {
 /*====================*/
 
 @keyframes tombe1 {
-    0%   { transform: translateY(-15vh) translateX(-10px) rotate(0deg); opacity: 1; }
+    0%   { transform: translateY(-15vh) translateX(-10px) rotate(0deg); opacity: 0; }
+    10%  { opacity: 1; }
     80%  { transform: translateY(0) translateX(-10px) rotate(0deg)}
     100% { transform: rotate(-7deg) translateX(-30px) translateY(0px); opacity: 1}
 }
 @keyframes tombe2 {
-    0%   { transform: translateY(-15vh) translateX(25px) rotate(0deg); opacity: 1; }
+    0%   { transform: translateY(-15vh) translateX(25px) rotate(0deg); opacity: 0; }
+    10%  { opacity: 1; }
     80%  { transform: translateY(0) translateX(25px) rotate(0deg)}
     100% { transform: rotate(20deg) translateX(45px) translateY(10px); opacity: 1}
 }
 @keyframes tombe3 {
-    0%   { transform: translateY(-15vh) translateX(-25px) rotate(0deg); opacity: 1}
+    0%   { transform: translateY(-15vh) translateX(-25px) rotate(0deg); opacity: 0}
+    10%  { opacity: 1; }
     80%  { transform: translateY(0) translateX(-25px) rotate(0deg) }
     100% { transform: rotate(-30deg) translateX(-55px) translateY(-3px);opacity: 1}
 }
 @keyframes tombe4 {
-    0%   { transform: translateY(-15vh) translateX(50px) rotate(0deg); opacity: 1; }
+    0%   { transform: translateY(-15vh) translateX(50px) rotate(0deg); opacity: 0; }
+    10%  { opacity: 1; }
     80%  { transform: translateY(0) translateX(50px) rotate(0deg)}
     100% { transform: translateX(50px); opacity: 1}
 }
 @keyframes tombe5 {
-    0%   { transform: translateY(-15vh); opacity: 1}
+    0%   { transform: translateY(-15vh); opacity: 0}
+    10%  { opacity: 1; }
     80%  { transform: translateY(0)}
     100% { transform: translateY(0); opacity: 1}
 }
@@ -367,11 +389,11 @@ main {
 #GenZ_filters button:nth-child(5) { transform: translateY(0)}
 
 
-#GenZ_filters button:nth-child(1).visible { animation: tombe1 0.6s cubic-bezier(0.4, 0, 1, 1)  }
-#GenZ_filters button:nth-child(2).visible { animation: tombe2 0.6s cubic-bezier(0.4, 0, 1, 1)  }
-#GenZ_filters button:nth-child(3).visible { animation: tombe3 0.6s cubic-bezier(0.4, 0, 1, 1)  }
-#GenZ_filters button:nth-child(4).visible { animation: tombe4 0.6s cubic-bezier(0.4, 0, 1, 1)  }
-#GenZ_filters button:nth-child(5).visible { animation: tombe5 0.6s cubic-bezier(0.4, 0, 1, 1)  }
+#GenZ_filters button:nth-child(1).visible { animation: tombe1 0.6s cubic-bezier(0.4, 0, 1, 1) 2.3s both; }
+#GenZ_filters button:nth-child(2).visible { animation: tombe2 0.6s cubic-bezier(0.4, 0, 1, 1) 2.3s both; }
+#GenZ_filters button:nth-child(3).visible { animation: tombe3 0.6s cubic-bezier(0.4, 0, 1, 1) 2.3s both; }
+#GenZ_filters button:nth-child(4).visible { animation: tombe4 0.6s cubic-bezier(0.4, 0, 1, 1) 2.3s both; }
+#GenZ_filters button:nth-child(5).visible { animation: tombe5 0.6s cubic-bezier(0.4, 0, 1, 1) 2.3s both; }
 
 /*====================*/
 /* BUZZ OUT

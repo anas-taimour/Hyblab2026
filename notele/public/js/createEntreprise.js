@@ -97,7 +97,7 @@ window.addEventListener("load", () => {
         setTimeout(() => {
             void anim.offsetWidth;
             anim.classList.add("visible");
-        }, 200 + index * 20);
+        }, 2400 + index * 20);
     });
 });
 

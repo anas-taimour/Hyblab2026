@@ -14,9 +14,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const quizQuestions = document.querySelectorAll("[data-quiz-question]");
   const endPopup = document.querySelector("[data-end-popup]");
   const endPopupClose = document.querySelector("[data-end-popup-close]");
-  let activeIndex = slides.findIndex((slide) => slide.classList.contains("is-active"));
-  let activeFactIndex = factSlides.findIndex((slide) => slide.classList.contains("is-active"));
-  let activeDidYouKnowIndex = didYouKnowSlides.findIndex((slide) => slide.classList.contains("is-active"));
+
+  window.carouselState = {
+    activeIndex: slides.findIndex((slide) => slide.classList.contains("is-active")),
+    activeFactIndex: factSlides.findIndex((slide) => slide.classList.contains("is-active")),
+    activeDidYouKnowIndex: didYouKnowSlides.findIndex((slide) => slide.classList.contains("is-active")),
+  };
+
+  if (window.carouselState.activeIndex < 0) window.carouselState.activeIndex = 0;
+  if (window.carouselState.activeFactIndex < 0) window.carouselState.activeFactIndex = 0;
+  if (window.carouselState.activeDidYouKnowIndex < 0) window.carouselState.activeDidYouKnowIndex = 0;
 
   const syncHeader = () => {
     header?.classList.toggle("is-scrolled", window.scrollY > 12);
@@ -29,118 +36,94 @@ document.addEventListener("DOMContentLoaded", () => {
     const observer = new IntersectionObserver(
       (entries, currentObserver) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) {
-            return;
-          }
-
+          if (!entry.isIntersecting) return;
           entry.target.classList.add("is-visible");
           currentObserver.unobserve(entry.target);
         });
       },
       { threshold: 0.15 }
     );
-
     revealItems.forEach((item) => observer.observe(item));
   } else {
     revealItems.forEach((item) => item.classList.add("is-visible"));
   }
 
-  if (activeIndex < 0) {
-    activeIndex = 0;
-  }
-
   const syncCarousel = () => {
     slides.forEach((slide, index) => {
-      slide.classList.toggle("is-active", index === activeIndex);
+      slide.classList.toggle("is-active", index === window.carouselState.activeIndex);
     });
-
     if (track) {
-      track.style.transform = `translateX(-${activeIndex * 113.5}%)`;
+      track.style.transform = `translateX(-${window.carouselState.activeIndex * 113.5}%)`;
     }
   };
 
+  window.syncCarousel = syncCarousel;
+
   navButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      if (!slides.length) {
-        return;
-      }
-
+      if (!slides.length) return;
       const direction = button.getAttribute("data-carousel-nav") === "next" ? 1 : -1;
-      activeIndex = (activeIndex + direction + slides.length) % slides.length;
+      window.carouselState.activeIndex = (window.carouselState.activeIndex + direction + slides.length) % slides.length;
       syncCarousel();
     });
   });
 
   syncCarousel();
 
-  if (activeFactIndex < 0) {
-    activeFactIndex = 0;
-  }
-
   const syncFactsCarousel = () => {
     factSlides.forEach((slide, index) => {
-      slide.classList.toggle("is-active", index === activeFactIndex);
+      slide.classList.toggle("is-active", index === window.carouselState.activeFactIndex);
     });
-
     if (factsTrack) {
-      factsTrack.style.transform = `translateX(-${activeFactIndex * 100}%)`;
+      factsTrack.style.transform = `translateX(-${window.carouselState.activeFactIndex * 100}%)`;
     }
-
     factButtons.forEach((button) => {
       const isPrev = button.getAttribute("data-facts-nav") === "prev";
       const shouldHide =
-        (isPrev && activeFactIndex === 0) ||
-        (!isPrev && activeFactIndex === factSlides.length - 1);
+        (isPrev && window.carouselState.activeFactIndex === 0) ||
+        (!isPrev && window.carouselState.activeFactIndex === factSlides.length - 1);
       button.classList.toggle("is-hidden", shouldHide);
     });
   };
 
+  window.syncFactsCarousel = syncFactsCarousel;
+
   factButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      if (!factSlides.length) {
-        return;
-      }
-
+      if (!factSlides.length) return;
       const direction = button.getAttribute("data-facts-nav") === "next" ? 1 : -1;
-      activeFactIndex = Math.max(0, Math.min(factSlides.length - 1, activeFactIndex + direction));
+      window.carouselState.activeFactIndex = Math.max(0, Math.min(factSlides.length - 1, window.carouselState.activeFactIndex + direction));
       syncFactsCarousel();
     });
   });
 
   syncFactsCarousel();
 
-  if (activeDidYouKnowIndex < 0) {
-    activeDidYouKnowIndex = 0;
-  }
-
   const syncDidYouKnowCarousel = () => {
     didYouKnowSlides.forEach((slide, index) => {
-      slide.classList.toggle("is-active", index === activeDidYouKnowIndex);
+      slide.classList.toggle("is-active", index === window.carouselState.activeDidYouKnowIndex);
     });
-
     if (didYouKnowTrack) {
-      didYouKnowTrack.style.transform = `translateX(-${activeDidYouKnowIndex * 100}%)`;
+      didYouKnowTrack.style.transform = `translateX(-${window.carouselState.activeDidYouKnowIndex * 100}%)`;
     }
-
     didYouKnowButtons.forEach((button) => {
       const isPrev = button.getAttribute("data-didyouknow-nav") === "prev";
       const shouldHide =
-        (isPrev && activeDidYouKnowIndex === 0) ||
-        (!isPrev && activeDidYouKnowIndex === didYouKnowSlides.length - 1);
+        (isPrev && window.carouselState.activeDidYouKnowIndex === 0) ||
+        (!isPrev && window.carouselState.activeDidYouKnowIndex === didYouKnowSlides.length - 1);
       button.classList.toggle("is-hidden", shouldHide);
     });
   };
 
+  window.syncDidYouKnowCarousel = syncDidYouKnowCarousel;
+
   didYouKnowButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      if (!didYouKnowSlides.length) {
-        return;
-      }
-
+      if (!didYouKnowSlides.length) return;
       const direction = button.getAttribute("data-didyouknow-nav") === "next" ? 1 : -1;
-      activeDidYouKnowIndex = Math.max(
+      window.carouselState.activeDidYouKnowIndex = Math.max(
         0,
-        Math.min(didYouKnowSlides.length - 1, activeDidYouKnowIndex + direction)
+        Math.min(didYouKnowSlides.length - 1, window.carouselState.activeDidYouKnowIndex + direction)
       );
       syncDidYouKnowCarousel();
     });
@@ -149,34 +132,21 @@ document.addEventListener("DOMContentLoaded", () => {
   if (didYouKnowViewport) {
     let touchStartX = 0;
 
-    didYouKnowViewport.addEventListener(
-      "touchstart",
-      (event) => {
-        touchStartX = event.changedTouches[0]?.clientX ?? 0;
-      },
-      { passive: true }
-    );
+    didYouKnowViewport.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0]?.clientX ?? 0;
+    }, { passive: true });
 
-    didYouKnowViewport.addEventListener(
-      "touchend",
-      (event) => {
-        const touchEndX = event.changedTouches[0]?.clientX ?? 0;
-        const deltaX = touchEndX - touchStartX;
-
-        if (Math.abs(deltaX) < 40 || !didYouKnowSlides.length) {
-          return;
-        }
-
-        if (deltaX < 0 && activeDidYouKnowIndex < didYouKnowSlides.length - 1) {
-          activeDidYouKnowIndex += 1;
-        } else if (deltaX > 0 && activeDidYouKnowIndex > 0) {
-          activeDidYouKnowIndex -= 1;
-        }
-
-        syncDidYouKnowCarousel();
-      },
-      { passive: true }
-    );
+    didYouKnowViewport.addEventListener("touchend", (event) => {
+      const touchEndX = event.changedTouches[0]?.clientX ?? 0;
+      const deltaX = touchEndX - touchStartX;
+      if (Math.abs(deltaX) < 40 || !didYouKnowSlides.length) return;
+      if (deltaX < 0 && window.carouselState.activeDidYouKnowIndex < didYouKnowSlides.length - 1) {
+        window.carouselState.activeDidYouKnowIndex += 1;
+      } else if (deltaX > 0 && window.carouselState.activeDidYouKnowIndex > 0) {
+        window.carouselState.activeDidYouKnowIndex -= 1;
+      }
+      syncDidYouKnowCarousel();
+    }, { passive: true });
   }
 
   syncDidYouKnowCarousel();
@@ -207,16 +177,16 @@ document.addEventListener("DOMContentLoaded", () => {
           feedbackStatus.textContent = isCorrect ? "BIEN JOUE !" : "DOMMAGE !";
           feedbackBody.textContent = feedbackText;
         }
-        /* Affichage bonne réponse */
+
         answers.forEach((answerBtn) => {
-          if (answerBtn.getAttribute("data-correct") === "true"){
-            if (answerBtn.style.scale == "1.15"){
+          if (answerBtn.getAttribute("data-correct") === "true") {
+            if (answerBtn.style.scale == "1.15") {
               answerBtn.style.scale = "1";
-            }else answerBtn.style.scale = "1.15";
-          }else{
-            if (answerBtn.classList.contains("light_blurred")){
-              answerBtn.classList.remove("light_blurred")
-            }else answerBtn.classList.add("light_blurred");
+            } else answerBtn.style.scale = "1.15";
+          } else {
+            if (answerBtn.classList.contains("light_blurred")) {
+              answerBtn.classList.remove("light_blurred");
+            } else answerBtn.classList.add("light_blurred");
           }
         });
       });
